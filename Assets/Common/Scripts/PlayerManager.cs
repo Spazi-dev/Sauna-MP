@@ -52,8 +52,8 @@ namespace Unity.Netcode.Samples.MultiplayerUseCases.Common
 			base.OnNetworkSpawn();
 			if (IsOwner)
 			{
-				OnOwnerCustomDataChanged(m_SyncedCosmeticData.Value, m_SyncedCosmeticData.Value);
-				m_SyncedCosmeticData.OnValueChanged += OnOwnerCustomDataChanged; //this will be called on the client whenever the value is changed by the server
+				OnCosmeticDataChanged(m_SyncedCosmeticData.Value, m_SyncedCosmeticData.Value);
+				m_SyncedCosmeticData.OnValueChanged += OnCosmeticDataChanged;
 				print($"<color=#DD8800>Owner spawned and its data synced </color>");
 
 				OnLocalPlayerSpawned();
@@ -68,6 +68,9 @@ namespace Unity.Netcode.Samples.MultiplayerUseCases.Common
 				 * We call the color change method manually when we connect to ensure that our color is correctly initialized.
 				 * This is helpful for when a client joins mid-game and needs to catch up with the current state of the game.
 				 */
+				OnCosmeticDataChanged(m_SyncedCosmeticData.Value, m_SyncedCosmeticData.Value);
+				m_SyncedCosmeticData.OnValueChanged += OnCosmeticDataChanged;
+				print($"<color=#0088DD>Client spawned and its data synced </color>");
 			}
 		}
 
@@ -129,7 +132,7 @@ namespace Unity.Netcode.Samples.MultiplayerUseCases.Common
 				if (m_ElapsedSecondsSinceLastChange >= m_SecondsBetweenDataChanges)
 				{
 					m_ElapsedSecondsSinceLastChange = 0;
-					print($"<color=#DD8800>Owner is changing data...</color>");
+					//print($"<color=#DD8800>Owner is changing data...</color>");
 					OwnerChangeData();
 				}
 
@@ -137,16 +140,6 @@ namespace Unity.Netcode.Samples.MultiplayerUseCases.Common
 
 		}
 
-		void OnServerChangeData()
-		{
-			m_SyncedCosmeticData.Value = new SyncableCosmeticData
-			{
-				Playername = MultiplayerUseCasesUtilities.GetRandomUsername(),
-				CharacterColor0 = MultiplayerUseCasesUtilities.GetRandomColor()
-
-			};
-			print($"<color=#88DD00>Server has created new syncable data</color>");
-		}
 		void OwnerChangeData()
 		{
 			m_SyncedCosmeticData.Value = new SyncableCosmeticData
@@ -158,30 +151,23 @@ namespace Unity.Netcode.Samples.MultiplayerUseCases.Common
 			print($"<color=#88DD00>Owner has created new syncable data</color>");
 		}
 
-		void OnClientCustomDataChanged(SyncableCosmeticData previousValue, SyncableCosmeticData newValue)
+		void OnCosmeticDataChanged(SyncableCosmeticData previousValue, SyncableCosmeticData newValue)
 		{
-			//print($"<color=#00DD88>Client data Username is being changed from {previousValue.Playername.ToString()}...</color>");
-			print($"<color=#00DD88>Client data Username is being changed...</color>");
-			OnClientUsernameChanged(newValue.Playername.ToString());
+			ChangeColor(newValue.CharacterColor0);
+			ChangeUsername(newValue.Playername.ToString());
+			print($"<color=#00DD88>Data has been changed</color>");
 		}
-
-		void OnOwnerCustomDataChanged(SyncableCosmeticData previousValue, SyncableCosmeticData newValue)
-		{
-			print($"<color=#00DD88>Owner data is being changed...</color>");
-			OnOwnerColorChanged(newValue.CharacterColor0);
-			OnClientUsernameChanged(newValue.Playername.ToString());
-		}
-		void OnClientUsernameChanged(string newUsername)
+		void ChangeUsername(string newUsername)
 		{
 			playerNameText.text = newUsername;
 			//print($"<color=#DD0088>Client data Username has been changed to {newUsername}</color>");
-			print($"<color=#DD0088>Client data Username has been changed</color>");
+			//print($"<color=#DD0088>Data Username has been changed</color>");
 		}
 
-		void OnOwnerColorChanged(Color32 newColor)
+		void ChangeColor(Color32 newColor)
 		{
 			playerCharacterMesh.material.color = newColor;
-			print($"<color=#DD0088>Owner data CharacterColor0 has been changed</color>");
+			//print($"<color=#DD0088>Data CharacterColor0 has been changed</color>");
 		}
 
 	}
