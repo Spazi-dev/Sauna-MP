@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/UseCaseSamples/ProximityChecks/ProximityChecks.unity
     guid: 2ed7b73fcf7a6f1438fb72c1480678e0
   - enabled: 0
@@ -23,6 +23,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SaunaScene.unity
     guid: 9a12077a139e9bf4e86561415db59cd3
+  - enabled: 1
+    path: Assets/Scenes/MenuUIScene.unity
+    guid: e1828fa412c50c746aa0f88ef08a9f10
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 4419d82f33d36e848b3ed5af4c8da37e, type: 3}
   m_UseUCBPForAssetBundles: 0

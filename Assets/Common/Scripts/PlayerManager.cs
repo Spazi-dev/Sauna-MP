@@ -50,10 +50,16 @@ namespace Unity.Netcode.Samples.MultiplayerUseCases.Common
 			/* When an Network Object is spawned, you usally want to setup some if its components
 			 * so that they behave differently depending on whether this object is owned by the local player or by other clients. */
 			base.OnNetworkSpawn();
-			if (IsOwner)
+			if (!IsServer)
 			{
 				OnCosmeticDataChanged(m_SyncedCosmeticData.Value, m_SyncedCosmeticData.Value);
 				m_SyncedCosmeticData.OnValueChanged += OnCosmeticDataChanged;
+			}
+
+			if (IsOwner)
+			{
+				//OnCosmeticDataChanged(m_SyncedCosmeticData.Value, m_SyncedCosmeticData.Value);
+				//m_SyncedCosmeticData.OnValueChanged += OnCosmeticDataChanged;
 				print($"<color=#DD8800>Owner spawned and its data synced </color>");
 
 				OnLocalPlayerSpawned();
@@ -68,8 +74,8 @@ namespace Unity.Netcode.Samples.MultiplayerUseCases.Common
 				 * We call the color change method manually when we connect to ensure that our color is correctly initialized.
 				 * This is helpful for when a client joins mid-game and needs to catch up with the current state of the game.
 				 */
-				OnCosmeticDataChanged(m_SyncedCosmeticData.Value, m_SyncedCosmeticData.Value);
-				m_SyncedCosmeticData.OnValueChanged += OnCosmeticDataChanged;
+				//OnCosmeticDataChanged(m_SyncedCosmeticData.Value, m_SyncedCosmeticData.Value);
+				//m_SyncedCosmeticData.OnValueChanged += OnCosmeticDataChanged;
 				print($"<color=#0088DD>Client spawned and its data synced </color>");
 			}
 		}
@@ -77,6 +83,11 @@ namespace Unity.Netcode.Samples.MultiplayerUseCases.Common
 		public override void OnNetworkDespawn()
 		{
 			base.OnNetworkDespawn();
+			if (!IsServer)
+			{
+				m_SyncedCosmeticData.OnValueChanged -= OnCosmeticDataChanged;
+			}
+
 			if (IsOwner)
 			{
 				OnLocalPlayerDeSpawned();

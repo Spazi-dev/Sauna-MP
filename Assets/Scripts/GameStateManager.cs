@@ -1,16 +1,37 @@
+using System;
+using Unity.Netcode;
 using UnityEngine;
 
 public class GameStateManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+	public static GameStateManager Singleton { get; private set; }
+	[SerializeField] GameObject StartMenuParent;
+	string menuSceneName;
+	void Awake()
+	{
+		if (Singleton == null)
+		{
+			Singleton = this;
+			DontDestroyOnLoad(gameObject);
+		}
+	}
+	void Start()
+	{
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+		NetworkManager.Singleton.OnClientStarted += StartEvent;
+		NetworkManager.Singleton.OnClientStopped += QuitEvent;
+	}
+
+	void StartEvent()
+	{
+		print($"<color=#DD0088>Client starteddd </color>");
+		StartMenuParent.SetActive(false);
+	}
+	void QuitEvent(bool host)
+	{
+		print($"<color=#FF00AA>Client quitted, hostmode: {host}</color>");
+		StartMenuParent.SetActive(true);
+	}
+
+
 }
