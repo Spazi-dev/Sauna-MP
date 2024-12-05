@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class GameStateManager : MonoBehaviour
 {
+
 	public static GameStateManager Singleton { get; private set; }
+	[SerializeField] public GlobalRuleSet activeGlobalRules;
 	[SerializeField] GameObject StartMenuParent;
 	string menuSceneName;
+	public CharacterSheet localCharacterSheet;
 	void Awake()
 	{
 		if (Singleton == null)

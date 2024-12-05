@@ -2,15 +2,18 @@ using TMPro;
 using UnityEngine;
 using PaziUtils;
 
-public class PlayerCharacterSheet : MonoBehaviour
+public struct CharacterSheet
+{
+	public string playerName;
+	public Color32 characterColor0;
+}
+public class PlayerCharacterCreator : MonoBehaviour
 {
 	// Local representation and manager of player and character information
 
-	[Header("Changed from scripts:")]
-	[SerializeField] string playerName;
-	[SerializeField] int minNameLength = 1;
-	[SerializeField] int maxNameLength = 13;
-	[SerializeField] Color32 characterColor0;
+	//[Header("Changed from scripts:")]
+	//[SerializeField] string playerName;
+	//[SerializeField] Color32 characterColor0;
 	[Header("References:")]
 	[SerializeField] FlexibleColorPicker colorPicker;
 	[SerializeField] SkinnedMeshRenderer playerCharacterMesh; // gotta maybe get these references dynamically for sending to actual player character or only ever use them for mannequin
@@ -19,15 +22,16 @@ public class PlayerCharacterSheet : MonoBehaviour
 													 //Material characterMaterial;
 	[Header("Editable variables:")]
 	[SerializeField] string[] defaultNames;
+	CharacterSheet activeCharacterSheet;
 	void Start()
 	{
 		if (PlayerPrefs.GetInt("CharacterCreated", 0) == 0) //Character not created previously, set to random
 		{
 			//Color randomColor = Color.HSVToRGB(Random.Range(0, 1f), Random.Range(0, 1f), Random.Range(.333f, 1f));
 			Color randomColor = Colorful.RandomHSV(0f, 1f, 0f, 1f, 0.333f, 1f);
-			characterColor0 = randomColor;
-			SetColor(characterColor0);
-			colorPicker.color = characterColor0;
+
+			SetColor(randomColor);
+			colorPicker.color = randomColor;
 
 			SetNameTag(RandomName());
 		}
@@ -40,35 +44,37 @@ public class PlayerCharacterSheet : MonoBehaviour
 
 	string RandomName()
 	{
-		playerName = defaultNames[Random.Range(0, defaultNames.Length)];
-		return playerName;
+		string randomName = defaultNames[Random.Range(0, defaultNames.Length)];
+		return randomName;
 	}
 
 	public void SetColor(Color col)
 	{
-		characterColor0 = col;
-		//characterMaterial.SetColor("_BaseColor", characterColor0);
-		playerCharacterMesh.material.SetColor("_BaseColor", characterColor0);
+		activeCharacterSheet.characterColor0 = col;
+		playerCharacterMesh.material.SetColor("_BaseColor", col);
 	}
 
 	public void SetNameTag(string name)
 	{
-
-		if (name.Length > maxNameLength)
+		string randomFallbackName;
+		if (name.Length > GameStateManager.Singleton.activeGlobalRules.MaxNameLength)
 		{
-			name = name[..maxNameLength]; //range operator
+			name = name[..GameStateManager.Singleton.activeGlobalRules.MaxNameLength]; //range operator
 		}
 
 		if (name.Length <= 0)
 		{
-			playerName = RandomName();
-			playerNameTag.text = playerName;
+			randomFallbackName = RandomName();
+			activeCharacterSheet.playerName = randomFallbackName;
+			playerNameTag.text = randomFallbackName;
 		}
 		else
 		{
-			playerName = name;
-			playerNameTag.text = playerName;
-			playerNameField.text = playerName;
+			activeCharacterSheet.playerName = name;
+			playerNameField.text = name;
+			playerNameTag.text = name;
 		}
+
+
 	}
 }
