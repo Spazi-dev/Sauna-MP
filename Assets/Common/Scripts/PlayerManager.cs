@@ -2,184 +2,183 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Collections;
 using TMPro;
+using Unity.Netcode;
+//using Unity.Netcode.Samples.MultiplayerUseCases.Common;
 
-namespace Unity.Netcode.Samples.MultiplayerUseCases.Common
+/// <summary>
+/// A generic player manager that manages the lifecycle of a player
+/// </summary>
+/// 
+struct SyncableCharacterData : INetworkSerializable
+{
+	public FixedString64Bytes Playername; //value-type version of string with fixed allocation. Strings should be avoided in general when dealing with netcode. Fixed strings are a "less bad" option.
+	public Color32 CharacterColor0;
+
+	public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+	{
+		serializer.SerializeValue(ref Playername);
+		serializer.SerializeValue(ref CharacterColor0);
+	}
+}
+public class PlayerManager : NetworkBehaviour
 {
 	/// <summary>
-	/// A generic player manager that manages the lifecycle of a player
+	/// The localplayer instance
 	/// </summary>
-	/// 
-	struct SyncableCosmeticData : INetworkSerializable
-	{
-		public FixedString64Bytes Playername; //value-type version of string with fixed allocation. Strings should be avoided in general when dealing with netcode. Fixed strings are a "less bad" option.
-		public Color32 CharacterColor0;
+	/// <remarks> You could use <c>NetworkManager.Singleton.LocalClient.PlayerObject</c> if you don't want to maintain this flag,
+	/// but keep in mind that you'll also have to check that the NetworkManager is available and that a local client is running</remarks>
+	public static PlayerManager s_LocalPlayer;
 
-		public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+	[SerializeField]
+	PlayerInput inputManager;
+	[SerializeField] GameObject playerNameTag;
+	[SerializeField] TMP_Text playerNameText;
+	[SerializeField] SkinnedMeshRenderer playerCharacterMesh;
+	[SerializeField] GameObject playerVCams;
+
+	[SerializeField, Tooltip("The seconds that will elapse between data changes")]
+
+	void Start()
+	{
+		Debug.Log($"Player joined, trying to access GameStateManager which doesn't get past the compiler:");
+		//Debug.Log(GameStateManager.Singleton);
+	}
+
+	/// <summary>
+	/// The NetworkVariable holding the custom data to synchronize.
+	/// </summary>
+	NetworkVariable<SyncableCharacterData> m_SyncedCharacterData = new NetworkVariable<SyncableCharacterData>(writePerm: NetworkVariableWritePermission.Owner); //you can adjust who can write to it with parameters
+
+	public override void OnNetworkSpawn()
+	{
+		/* When an Network Object is spawned, you usally want to setup some if its components
+		 * so that they behave differently depending on whether this object is owned by the local player or by other clients. */
+		base.OnNetworkSpawn();
+		if (!IsServer)
 		{
-			serializer.SerializeValue(ref Playername);
-			serializer.SerializeValue(ref CharacterColor0);
+			OnCharacterDataChanged(m_SyncedCharacterData.Value, m_SyncedCharacterData.Value);
+			m_SyncedCharacterData.OnValueChanged += OnCharacterDataChanged;
+		}
+
+		if (IsOwner)
+		{
+			//OnCharacterDataChanged(m_SyncedCharacterData.Value, m_SyncedCharacterData.Value);
+			//m_SyncedCharacterData.OnValueChanged += OnCharacterDataChanged;
+			InitializeSyncedCharacterData();
+
+			//print($"<color=#DD8800>Owner spawned and its data synced </color>");
+
+			OnLocalPlayerSpawned();
+			return;
+		}
+
+		OnNonLocalPlayerSpawned();
+
+		if (IsClient)
+		{
+			/*
+			 * We call the color change method manually when we connect to ensure that our color is correctly initialized.
+			 * This is helpful for when a client joins mid-game and needs to catch up with the current state of the game.
+			 */
+			//OnCharacterDataChanged(m_SyncedCharacterData.Value, m_SyncedCharacterData.Value);
+			//m_SyncedCharacterData.OnValueChanged += OnCharacterDataChanged;
+			print($"<color=#0088DD>Client spawned and its data synced </color>");
 		}
 	}
-	public class PlayerManager : NetworkBehaviour
+
+	public override void OnNetworkDespawn()
 	{
-		/// <summary>
-		/// The localplayer instance
-		/// </summary>
-		/// <remarks> You could use <c>NetworkManager.Singleton.LocalClient.PlayerObject</c> if you don't want to maintain this flag,
-		/// but keep in mind that you'll also have to check that the NetworkManager is available and that a local client is running</remarks>
-		public static PlayerManager s_LocalPlayer;
-
-		[SerializeField]
-		PlayerInput inputManager;
-		[SerializeField] GameObject playerNameTag;
-		[SerializeField] TMP_Text playerNameText;
-		[SerializeField] SkinnedMeshRenderer playerCharacterMesh;
-		[SerializeField] GameObject playerVCams;
-
-		[SerializeField, Tooltip("The seconds that will elapse between data changes")]
-		float m_SecondsBetweenDataChanges;
-		float m_ElapsedSecondsSinceLastChange;
-
-		/// <summary>
-		/// The NetworkVariable holding the custom data to synchronize.
-		/// </summary>
-		NetworkVariable<SyncableCosmeticData> m_SyncedCosmeticData = new NetworkVariable<SyncableCosmeticData>(writePerm: NetworkVariableWritePermission.Owner); //you can adjust who can write to it with parameters
-
-		public override void OnNetworkSpawn()
+		base.OnNetworkDespawn();
+		if (!IsServer)
 		{
-			/* When an Network Object is spawned, you usally want to setup some if its components
-			 * so that they behave differently depending on whether this object is owned by the local player or by other clients. */
-			base.OnNetworkSpawn();
-			if (!IsServer)
-			{
-				OnCosmeticDataChanged(m_SyncedCosmeticData.Value, m_SyncedCosmeticData.Value);
-				m_SyncedCosmeticData.OnValueChanged += OnCosmeticDataChanged;
-			}
-
-			if (IsOwner)
-			{
-				//OnCosmeticDataChanged(m_SyncedCosmeticData.Value, m_SyncedCosmeticData.Value);
-				//m_SyncedCosmeticData.OnValueChanged += OnCosmeticDataChanged;
-				print($"<color=#DD8800>Owner spawned and its data synced </color>");
-
-				OnLocalPlayerSpawned();
-				return;
-			}
-
-			OnNonLocalPlayerSpawned();
-
-			if (IsClient)
-			{
-				/*
-				 * We call the color change method manually when we connect to ensure that our color is correctly initialized.
-				 * This is helpful for when a client joins mid-game and needs to catch up with the current state of the game.
-				 */
-				//OnCosmeticDataChanged(m_SyncedCosmeticData.Value, m_SyncedCosmeticData.Value);
-				//m_SyncedCosmeticData.OnValueChanged += OnCosmeticDataChanged;
-				print($"<color=#0088DD>Client spawned and its data synced </color>");
-			}
+			m_SyncedCharacterData.OnValueChanged -= OnCharacterDataChanged;
 		}
 
-		public override void OnNetworkDespawn()
+		if (IsOwner)
 		{
-			base.OnNetworkDespawn();
-			if (!IsServer)
-			{
-				m_SyncedCosmeticData.OnValueChanged -= OnCosmeticDataChanged;
-			}
+			OnLocalPlayerDeSpawned();
+			return;
+		}
+		OnNonLocalPlayerDeSpawned();
+	}
 
-			if (IsOwner)
-			{
-				OnLocalPlayerDeSpawned();
-				return;
-			}
-			OnNonLocalPlayerDeSpawned();
+	void OnNonLocalPlayerSpawned()
+	{
+		//you don't want other players to be able to control your player
+		if (inputManager)
+		{
+			inputManager.enabled = false;
 		}
 
-		void OnNonLocalPlayerSpawned()
-		{
-			//you don't want other players to be able to control your player
-			if (inputManager)
-			{
-				inputManager.enabled = false;
-			}
+		playerVCams.SetActive(false);
+	}
 
-			playerVCams.SetActive(false);
+	void OnLocalPlayerSpawned()
+	{
+		/* you want only the local player to be identified as such, and to have its input-related components enabled.
+		 * The same concept usually applies for cameras, UI, etc...*/
+		s_LocalPlayer = this;
+		if (inputManager)
+		{
+			inputManager.enabled = IsOwner;
 		}
 
-		void OnLocalPlayerSpawned()
-		{
-			/* you want only the local player to be identified as such, and to have its input-related components enabled.
-			 * The same concept usually applies for cameras, UI, etc...*/
-			s_LocalPlayer = this;
-			if (inputManager)
-			{
-				inputManager.enabled = IsOwner;
-			}
+		//playerNameTag.SetActive(false); //The player should not see their own nametag?
+	}
 
-			//playerNameTag.SetActive(false); //The player should not see their own nametag?
+	void OnLocalPlayerDeSpawned()
+	{
+		s_LocalPlayer = null;
+	}
+
+	void OnNonLocalPlayerDeSpawned() { }
+
+	void Update()
+	{
+		//Debug.Log(GameStateManager.Singleton.localCharacterSheet.PlayerName.ToString());
+
+		if (!IsSpawned)
+		{
+			//the player disconnected
+			return;
 		}
 
-		void OnLocalPlayerDeSpawned()
+		if (IsOwner)
 		{
-			s_LocalPlayer = null;
-		}
 
-		void OnNonLocalPlayerDeSpawned() { }
-
-		void Update()
-		{
-			if (!IsSpawned)
-			{
-				//the player disconnected
-				return;
-			}
-
-			if (IsOwner)
-			{
-
-				m_ElapsedSecondsSinceLastChange += Time.deltaTime;
-
-				if (m_ElapsedSecondsSinceLastChange >= m_SecondsBetweenDataChanges)
-				{
-					m_ElapsedSecondsSinceLastChange = 0;
-					//print($"<color=#DD8800>Owner is changing data...</color>");
-					OwnerChangeData();
-				}
-
-			}
-
-		}
-
-		void OwnerChangeData()
-		{
-			m_SyncedCosmeticData.Value = new SyncableCosmeticData
-			{
-				Playername = MultiplayerUseCasesUtilities.GetRandomUsername(),
-				CharacterColor0 = MultiplayerUseCasesUtilities.GetRandomColor()
-
-			};
-			print($"<color=#88DD00>Owner has created new syncable data</color>");
-		}
-
-		void OnCosmeticDataChanged(SyncableCosmeticData previousValue, SyncableCosmeticData newValue)
-		{
-			ChangeColor(newValue.CharacterColor0);
-			ChangeUsername(newValue.Playername.ToString());
-			print($"<color=#00DD88>Data has been changed</color>");
-		}
-		void ChangeUsername(string newUsername)
-		{
-			playerNameText.text = newUsername;
-			//print($"<color=#DD0088>Client data Username has been changed to {newUsername}</color>");
-			//print($"<color=#DD0088>Data Username has been changed</color>");
-		}
-
-		void ChangeColor(Color32 newColor)
-		{
-			playerCharacterMesh.material.color = newColor;
-			//print($"<color=#DD0088>Data CharacterColor0 has been changed</color>");
 		}
 
 	}
+
+	void InitializeSyncedCharacterData()
+	{
+
+		m_SyncedCharacterData.Value = new SyncableCharacterData
+		{
+			Playername = "a",
+			CharacterColor0 = Color.blue
+		};
+
+		print($"<color=#88DD00>Owner has created new syncable data</color>");
+	}
+
+	void OnCharacterDataChanged(SyncableCharacterData previousValue, SyncableCharacterData newValue)
+	{
+		ChangeColor(newValue.CharacterColor0);
+		ChangeUsername(newValue.Playername.ToString());
+		print($"<color=#00DD88>Data has been changed</color>");
+	}
+	void ChangeUsername(string newUsername)
+	{
+		playerNameText.text = newUsername;
+		//print($"<color=#DD0088>Client data Username has been changed to {newUsername}</color>");
+		//print($"<color=#DD0088>Data Username has been changed</color>");
+	}
+
+	void ChangeColor(Color32 newColor)
+	{
+		playerCharacterMesh.material.color = newColor;
+		//print($"<color=#DD0088>Data CharacterColor0 has been changed</color>");
+	}
+
 }

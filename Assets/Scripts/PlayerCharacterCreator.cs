@@ -4,8 +4,8 @@ using PaziUtils;
 
 public struct CharacterSheet
 {
-	public string playerName;
-	public Color32 characterColor0;
+	public string PlayerName;
+	public Color32 CharacterColor0;
 }
 public class PlayerCharacterCreator : MonoBehaviour
 {
@@ -22,21 +22,23 @@ public class PlayerCharacterCreator : MonoBehaviour
 													 //Material characterMaterial;
 	[Header("Editable variables:")]
 	[SerializeField] string[] defaultNames;
-	CharacterSheet activeCharacterSheet;
+	CharacterSheet editedCharacterSheet;
 	void Start()
 	{
 		if (PlayerPrefs.GetInt("CharacterCreated", 0) == 0) //Character not created previously, set to random
 		{
 			//Color randomColor = Color.HSVToRGB(Random.Range(0, 1f), Random.Range(0, 1f), Random.Range(.333f, 1f));
 			Color randomColor = Colorful.RandomHSV(0f, 1f, 0f, 1f, 0.333f, 1f);
-
-			SetColor(randomColor);
 			colorPicker.color = randomColor;
 
+			SetColor(randomColor);
 			SetNameTag(RandomName());
+
+			SaveCharacterSheet();
 		}
-		else
+		else // Character supposedly saved to playerprefs
 		{
+
 			//colorPicker.color = characterColor0;
 			//characterMaterial = playerCharacterMesh.material;
 		}
@@ -50,7 +52,7 @@ public class PlayerCharacterCreator : MonoBehaviour
 
 	public void SetColor(Color col)
 	{
-		activeCharacterSheet.characterColor0 = col;
+		editedCharacterSheet.CharacterColor0 = col;
 		playerCharacterMesh.material.SetColor("_BaseColor", col);
 	}
 
@@ -65,16 +67,22 @@ public class PlayerCharacterCreator : MonoBehaviour
 		if (name.Length <= 0)
 		{
 			randomFallbackName = RandomName();
-			activeCharacterSheet.playerName = randomFallbackName;
+			editedCharacterSheet.PlayerName = randomFallbackName;
 			playerNameTag.text = randomFallbackName;
 		}
 		else
 		{
-			activeCharacterSheet.playerName = name;
+			editedCharacterSheet.PlayerName = name;
 			playerNameField.text = name;
 			playerNameTag.text = name;
 		}
 
 
+	}
+
+	void SaveCharacterSheet()
+	{
+		GameStateManager.Singleton.localCharacterSheet = editedCharacterSheet;
+		//Save to playerprefs here too probably
 	}
 }

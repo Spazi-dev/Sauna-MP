@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eb5fe5b94776a14faeb27929feceaa4, type: 3}
   m_Name: Default Global Rule Set
   m_EditorClassIdentifier: 
-  MaxNameLength: 0
+  MaxNameLength: 13
   Description: 

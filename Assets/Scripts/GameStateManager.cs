@@ -8,7 +8,6 @@ public class GameStateManager : MonoBehaviour
 	public static GameStateManager Singleton { get; private set; }
 	[SerializeField] public GlobalRuleSet activeGlobalRules;
 	[SerializeField] GameObject StartMenuParent;
-	string menuSceneName;
 	public CharacterSheet localCharacterSheet;
 	void Awake()
 	{
@@ -20,7 +19,6 @@ public class GameStateManager : MonoBehaviour
 	}
 	void Start()
 	{
-
 		NetworkManager.Singleton.OnClientStarted += StartEvent;
 		NetworkManager.Singleton.OnClientStopped += QuitEvent;
 	}
