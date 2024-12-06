@@ -25,6 +25,7 @@ public class PlayerCharacterCreator : MonoBehaviour
 	CharacterSheet editedCharacterSheet;
 	void Start()
 	{
+
 		if (PlayerPrefs.GetInt("CharacterCreated", 0) == 0) //Character not created previously, set to random
 		{
 			//Color randomColor = Color.HSVToRGB(Random.Range(0, 1f), Random.Range(0, 1f), Random.Range(.333f, 1f));
@@ -54,6 +55,8 @@ public class PlayerCharacterCreator : MonoBehaviour
 	{
 		editedCharacterSheet.CharacterColor0 = col;
 		playerCharacterMesh.material.SetColor("_BaseColor", col);
+
+		SaveCharacterSheet(); // this could be called with a delegate only when joining and to avoid duplication and writing to prefs a lot 
 	}
 
 	public void SetNameTag(string name)
@@ -77,7 +80,7 @@ public class PlayerCharacterCreator : MonoBehaviour
 			playerNameTag.text = name;
 		}
 
-
+		SaveCharacterSheet(); // this could be called with a delegate only when joining and to avoid duplication and writing to prefs a lot 
 	}
 
 	void SaveCharacterSheet()
