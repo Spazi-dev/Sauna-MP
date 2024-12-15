@@ -10,7 +10,7 @@ ModelImporter:
       name: Material.001
     second: {fileID: 2100000, guid: 269f1782487e65e49b424e5821ab0ceb, type: 2}
   materials:
-    materialImportMode: 2
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 1

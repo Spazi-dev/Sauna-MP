@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcf781f4d7c38724f88ef5c8cd9b8657, type: 3}
+  m_Name: Cat Cosmetic Item Catalog
+  m_EditorClassIdentifier: 
+  CatalogDescription: Cosmetic items for the test cat character
+  CosmeticItems:
+  - {fileID: 6200510664130963308, guid: 1aa9b257f7801a349835f3a1970ec18c, type: 3}
+  - {fileID: 7203610275012579509, guid: 9c6327d193b1b184fbb155c359e8f990, type: 3}
+  - {fileID: 3609901234940735873, guid: f573dd62c7c3be94188f2f0d6ef964ef, type: 3}
+  - {fileID: 5042008499221670895, guid: b09ef94e4d5952b4b88cbd659d0dcb96, type: 3}
+  - {fileID: 7452861691306369394, guid: 00b18ec0775eb4643a22806e4be8fb71, type: 3}
+  - {fileID: 7837500396142143123, guid: 2becd71552b9f4e438ff7fbc183c0091, type: 3}
+  - {fileID: 1467013264589072428, guid: 2db31f8c01397ae43aef8b61dabf0340, type: 3}
+  - {fileID: 7660638240894076126, guid: 3977b61177f954143b9096c9d551f769, type: 3}
+  - {fileID: 1638130057298378100, guid: 84b36dbf69d69b34b9a195513169eb4e, type: 3}
+  - {fileID: 3637990430916886367, guid: 615a3b461c3a1594e98f697cb75a4f2b, type: 3}
+  - {fileID: 1967937190160024763, guid: 4791ab90b277459469c2779fafb441b6, type: 3}
+  - {fileID: 5665233497466061905, guid: 9c1f1aa0f03c7b248b635c6056998615, type: 3}
+  - {fileID: 6445562204223477471, guid: 4fa2f92e7b59fc2409ded66a62d35542, type: 3}
+  - {fileID: 4419707974590035211, guid: ff6c4dce69858324db8af736f8b439a9, type: 3}
+  - {fileID: 6275494239470103594, guid: c19a1dc75421cb443aa92c629799f9f0, type: 3}
+  - {fileID: 8680183007295957859, guid: a43ada4a02094f943813cef95ad7138a, type: 3}
+  - {fileID: 7959687373157078695, guid: 53105868cce711142b287dab8fad57ee, type: 3}

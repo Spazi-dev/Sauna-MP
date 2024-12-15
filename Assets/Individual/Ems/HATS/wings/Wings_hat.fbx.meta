@@ -10,7 +10,7 @@ ModelImporter:
       name: Wings
     second: {fileID: 2100000, guid: 76e43aea80abe3d428d8071538191d8a, type: 2}
   materials:
-    materialImportMode: 2
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 1

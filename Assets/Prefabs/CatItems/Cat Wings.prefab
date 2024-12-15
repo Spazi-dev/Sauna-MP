@@ -1,0 +1,133 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &991835035054720928
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4891013527842969241}
+  - component: {fileID: 8680183007295957859}
+  m_Layer: 0
+  m_Name: Cat Wings
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4891013527842969241
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991835035054720928}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7099250252158966158}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8680183007295957859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991835035054720928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1045cb5327ba2ea419841286603a5607, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colorableMesh: {fileID: 8272750368259465953}
+  ItemName: Wings
+  CharacterBone: Spine.002
+--- !u!1001 &7282077608965373541
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4891013527842969241}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 6997dd4cd497d864eb6f749a732e7070, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.3979275
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6997dd4cd497d864eb6f749a732e7070, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.3979275
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6997dd4cd497d864eb6f749a732e7070, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.53958964
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6997dd4cd497d864eb6f749a732e7070, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6997dd4cd497d864eb6f749a732e7070, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.009
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6997dd4cd497d864eb6f749a732e7070, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.054
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6997dd4cd497d864eb6f749a732e7070, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.95838994
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6997dd4cd497d864eb6f749a732e7070, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.28546247
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6997dd4cd497d864eb6f749a732e7070, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 4.135904e-25
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6997dd4cd497d864eb6f749a732e7070, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 3.618916e-25
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6997dd4cd497d864eb6f749a732e7070, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -33.173
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6997dd4cd497d864eb6f749a732e7070, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6997dd4cd497d864eb6f749a732e7070, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6997dd4cd497d864eb6f749a732e7070, type: 3}
+      propertyPath: m_Name
+      value: Wings_hat
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6997dd4cd497d864eb6f749a732e7070, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6997dd4cd497d864eb6f749a732e7070, type: 3}
+--- !u!4 &7099250252158966158 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6997dd4cd497d864eb6f749a732e7070, type: 3}
+  m_PrefabInstance: {fileID: 7282077608965373541}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8272750368259465953 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 6997dd4cd497d864eb6f749a732e7070, type: 3}
+  m_PrefabInstance: {fileID: 7282077608965373541}
+  m_PrefabAsset: {fileID: 0}

@@ -6,6 +6,8 @@ public struct CharacterSheet
 {
 	public string PlayerName;
 	public Color32 CharacterColor0;
+	public Color32 CharacterColor1;
+	public int CharacterItem1;
 }
 public class PlayerCharacterCreator : MonoBehaviour
 {
@@ -15,7 +17,8 @@ public class PlayerCharacterCreator : MonoBehaviour
 	//[SerializeField] string playerName;
 	//[SerializeField] Color32 characterColor0;
 	[Header("References:")]
-	[SerializeField] FlexibleColorPicker colorPicker;
+	[SerializeField] FlexibleColorPicker colorPicker0;
+	[SerializeField] FlexibleColorPicker colorPicker1;
 	[SerializeField] SkinnedMeshRenderer playerCharacterMesh; // gotta maybe get these references dynamically for sending to actual player character or only ever use them for mannequin
 	[SerializeField] TMP_Text playerNameTag; // gotta maybe get these references dynamically for sending to actual player character or only ever use them for mannequin
 	[SerializeField] TMP_InputField playerNameField; // this should be replaced by name field script probably
@@ -30,12 +33,18 @@ public class PlayerCharacterCreator : MonoBehaviour
 		{
 			//Color randomColor = Color.HSVToRGB(Random.Range(0, 1f), Random.Range(0, 1f), Random.Range(.333f, 1f));
 			Color randomColor = Colorful.RandomHSV(0f, 1f, 0f, 1f, 0.333f, 1f);
-			colorPicker.color = randomColor;
+			colorPicker0.color = randomColor;
 
-			SetColor(randomColor);
+			SetColor0(randomColor);
+
+			randomColor = Colorful.RandomHSV(0f, 1f, 0f, 1f, 0.333f, 1f);
+			colorPicker1.color = randomColor;
+
+			SetColor1(randomColor);
+
 			SetNameTag(RandomName());
 
-			SaveCharacterSheet();
+			//SaveCharacterSheet(); 
 		}
 		else // Character supposedly saved to playerprefs
 		{
@@ -51,9 +60,16 @@ public class PlayerCharacterCreator : MonoBehaviour
 		return randomName;
 	}
 
-	public void SetColor(Color col)
+	public void SetColor0(Color col)
 	{
 		editedCharacterSheet.CharacterColor0 = col;
+		playerCharacterMesh.material.SetColor("_BaseColor", col);
+
+		SaveCharacterSheet(); // this could be called with a delegate only when joining and to avoid duplication and writing to prefs a lot 
+	}
+	public void SetColor1(Color col)
+	{
+		editedCharacterSheet.CharacterColor1 = col;
 		playerCharacterMesh.material.SetColor("_BaseColor", col);
 
 		SaveCharacterSheet(); // this could be called with a delegate only when joining and to avoid duplication and writing to prefs a lot 

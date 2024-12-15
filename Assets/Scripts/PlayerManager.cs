@@ -13,11 +13,15 @@ struct SyncableCharacterData : INetworkSerializable
 {
 	public FixedString64Bytes Playername; //value-type version of string with fixed allocation. Strings should be avoided in general when dealing with netcode. Fixed strings are a "less bad" option.
 	public Color32 CharacterColor0;
+	public Color32 CharacterColor1;
+	public int CharacterItem1;
 
 	public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
 	{
 		serializer.SerializeValue(ref Playername);
 		serializer.SerializeValue(ref CharacterColor0);
+		serializer.SerializeValue(ref CharacterColor1);
+		serializer.SerializeValue(ref CharacterItem1);
 	}
 }
 public class PlayerManager : NetworkBehaviour
@@ -35,8 +39,6 @@ public class PlayerManager : NetworkBehaviour
 	[SerializeField] TMP_Text playerNameText;
 	[SerializeField] SkinnedMeshRenderer playerCharacterMesh;
 	[SerializeField] GameObject playerVCams;
-
-	[SerializeField, Tooltip("The seconds that will elapse between data changes")]
 
 	/// <summary>
 	/// The NetworkVariable holding the custom data to synchronize.
@@ -150,7 +152,9 @@ public class PlayerManager : NetworkBehaviour
 		m_SyncedCharacterData.Value = new SyncableCharacterData
 		{
 			Playername = GameStateManager.Singleton.localCharacterSheet.PlayerName,
-			CharacterColor0 = GameStateManager.Singleton.localCharacterSheet.CharacterColor0
+			CharacterColor0 = GameStateManager.Singleton.localCharacterSheet.CharacterColor0,
+			CharacterColor1 = GameStateManager.Singleton.localCharacterSheet.CharacterColor1,
+			CharacterItem1 = GameStateManager.Singleton.localCharacterSheet.CharacterItem1
 		};
 
 		print($"<color=#88DD00>Owner has created new syncable data</color>");
@@ -158,8 +162,10 @@ public class PlayerManager : NetworkBehaviour
 
 	void OnCharacterDataChanged(SyncableCharacterData previousValue, SyncableCharacterData newValue)
 	{
-		ChangeColor(newValue.CharacterColor0);
 		ChangeUsername(newValue.Playername.ToString());
+		ChangeColor0(newValue.CharacterColor0);
+		ChangeColor1(newValue.CharacterColor1);
+		ChangeItem1(newValue.CharacterItem1);
 		print($"<color=#00DD88>Data has been changed</color>");
 	}
 	void ChangeUsername(string newUsername)
@@ -169,10 +175,20 @@ public class PlayerManager : NetworkBehaviour
 		//print($"<color=#DD0088>Data Username has been changed</color>");
 	}
 
-	void ChangeColor(Color32 newColor)
+	void ChangeColor0(Color32 newColor)
 	{
 		playerCharacterMesh.material.color = newColor;
 		//print($"<color=#DD0088>Data CharacterColor0 has been changed</color>");
+	}
+
+	void ChangeColor1(Color32 newColor)
+	{
+		//playerCharacterMesh.material.color = newColor; // Changing item1 color
+	}
+
+	void ChangeItem1(int newItem)
+	{
+		//playerCharacterMesh.material.color = newColor; // Changing item1 color
 	}
 
 }
