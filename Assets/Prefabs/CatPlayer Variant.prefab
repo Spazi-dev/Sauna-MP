@@ -1878,6 +1878,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 302457659724839300}
     - target: {fileID: 3519998252034327294, guid: b4f4d10f529a9064487c55fc530813b2, type: 3}
+      propertyPath: playerCharacterRigRoot
+      value: 
+      objectReference: {fileID: 6969858954313395908}
+    - target: {fileID: 3519998252034327294, guid: b4f4d10f529a9064487c55fc530813b2, type: 3}
       propertyPath: m_SecondsBetweenDataChanges
       value: 1
       objectReference: {fileID: 0}

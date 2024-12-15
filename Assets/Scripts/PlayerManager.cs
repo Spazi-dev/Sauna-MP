@@ -37,8 +37,10 @@ public class PlayerManager : NetworkBehaviour
 	PlayerInput inputManager;
 	[SerializeField] GameObject playerNameTag;
 	[SerializeField] TMP_Text playerNameText;
+	[SerializeField] Transform playerCharacterRigRoot;
 	[SerializeField] SkinnedMeshRenderer playerCharacterMesh;
 	[SerializeField] GameObject playerVCams;
+	CosmeticItem currentHat;
 
 	/// <summary>
 	/// The NetworkVariable holding the custom data to synchronize.
@@ -164,8 +166,11 @@ public class PlayerManager : NetworkBehaviour
 	{
 		ChangeUsername(newValue.Playername.ToString());
 		ChangeColor0(newValue.CharacterColor0);
-		ChangeColor1(newValue.CharacterColor1);
 		ChangeItem1(newValue.CharacterItem1);
+
+		if (newValue.CharacterItem1 > 0)
+			ChangeColor1(newValue.CharacterColor1); // only change hat color if there is a hat
+
 		print($"<color=#00DD88>Data has been changed</color>");
 	}
 	void ChangeUsername(string newUsername)
@@ -183,12 +188,38 @@ public class PlayerManager : NetworkBehaviour
 
 	void ChangeColor1(Color32 newColor)
 	{
-		//playerCharacterMesh.material.color = newColor; // Changing item1 color
+		currentHat.SetItemColor(newColor);
 	}
 
 	void ChangeItem1(int newItem)
 	{
-		//playerCharacterMesh.material.color = newColor; // Changing item1 color
+		if (currentHat == null) // no hat exists
+		{
+			if (newItem == 0) // no hat chosen
+			{
+				return;
+			}
+			else
+			{
+				AddNewHat(newItem);
+			}
+		}
+		else // hat exists
+		{
+			Destroy(currentHat.gameObject);
+
+			if (newItem > 0)    // a hat chosen
+			{
+				AddNewHat(newItem);
+			}
+		}
+	}
+
+	void AddNewHat(int newItem)
+	{
+		currentHat = Instantiate(
+		GameStateManager.Singleton.CosmeticItemCatalog.CosmeticItems[newItem - 1],
+		playerCharacterRigRoot.FindRecursive(GameStateManager.Singleton.CosmeticItemCatalog.CosmeticItems[newItem - 1].CharacterBone));
 	}
 
 }

@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1045cb5327ba2ea419841286603a5607, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorableMesh: {fileID: 0}
+  colorableMesh: {fileID: 9020291023377267467}
   ItemName: Emo Hair
   CharacterBone: Head
 --- !u!1001 &7705403073541793679
@@ -128,5 +128,10 @@ PrefabInstance:
 --- !u!4 &7882898279515816036 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ff836f54931ccd2429569d38e6238d7d, type: 3}
+  m_PrefabInstance: {fileID: 7705403073541793679}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &9020291023377267467 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: ff836f54931ccd2429569d38e6238d7d, type: 3}
   m_PrefabInstance: {fileID: 7705403073541793679}
   m_PrefabAsset: {fileID: 0}

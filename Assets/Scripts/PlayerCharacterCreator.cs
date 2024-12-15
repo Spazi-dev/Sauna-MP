@@ -1,13 +1,15 @@
 using TMPro;
 using UnityEngine;
 using PaziUtils;
+using System.Collections.Generic;
 
 public struct CharacterSheet
 {
 	public string PlayerName;
-	public Color32 CharacterColor0;
-	public Color32 CharacterColor1;
-	public int CharacterItem1;
+	public Color32 CharacterColor0; // color of the body
+	public Color32 CharacterColor1; // color of the first cosmetic item (hat)
+	public int CharacterItem1; // in character sheet 0 is no hat, but in ItemCatalog it's the first hat of the catalog
+
 }
 public class PlayerCharacterCreator : MonoBehaviour
 {
@@ -19,13 +21,18 @@ public class PlayerCharacterCreator : MonoBehaviour
 	[Header("References:")]
 	[SerializeField] FlexibleColorPicker colorPicker0;
 	[SerializeField] FlexibleColorPicker colorPicker1;
-	[SerializeField] SkinnedMeshRenderer playerCharacterMesh; // gotta maybe get these references dynamically for sending to actual player character or only ever use them for mannequin
-	[SerializeField] TMP_Text playerNameTag; // gotta maybe get these references dynamically for sending to actual player character or only ever use them for mannequin
+	[SerializeField] TMP_Dropdown cosmeticItemDropdown;
+	[SerializeField] Transform mannequinRigRoot;
+	[SerializeField] SkinnedMeshRenderer mannequinCharacterMesh; // gotta maybe get these references dynamically for sending to actual player character or only ever use them for mannequin
+	[SerializeField] TMP_Text mannequinNameTag; // gotta maybe get these references dynamically for sending to actual player character or only ever use them for mannequin
 	[SerializeField] TMP_InputField playerNameField; // this should be replaced by name field script probably
-													 //Material characterMaterial;
+
 	[Header("Editable variables:")]
+
 	[SerializeField] string[] defaultNames;
 	CharacterSheet editedCharacterSheet;
+	CosmeticItem currentHat;
+	List<string> cosmeticItemList;
 	void Start()
 	{
 
@@ -52,6 +59,14 @@ public class PlayerCharacterCreator : MonoBehaviour
 			//colorPicker.color = characterColor0;
 			//characterMaterial = playerCharacterMesh.material;
 		}
+
+		// Initializing hat list
+		cosmeticItemList = new List<string>();
+		for (int i = 0; i < GameStateManager.Singleton.CosmeticItemCatalog.CosmeticItems.Length; i++)
+		{
+			cosmeticItemList.Add(GameStateManager.Singleton.CosmeticItemCatalog.CosmeticItems[i].ItemName);
+		}
+		cosmeticItemDropdown.AddOptions(cosmeticItemList);
 	}
 
 	string RandomName()
@@ -60,17 +75,45 @@ public class PlayerCharacterCreator : MonoBehaviour
 		return randomName;
 	}
 
+	public void SelectHat(int choice)
+	{
+		if (choice == 0)
+		{
+			Debug.Log($"<color=#GG7700>Selected no hat </color>");
+			if (currentHat != null)
+				Destroy(currentHat.gameObject);
+		}
+		else
+		{
+			if (currentHat != null)
+				Destroy(currentHat.gameObject);
+
+			editedCharacterSheet.CharacterItem1 = choice; // in character sheet 0 is no hat, but in ItemCatalog it's the first hat of the catalog
+
+
+			currentHat = Instantiate(
+				GameStateManager.Singleton.CosmeticItemCatalog.CosmeticItems[choice - 1],
+				mannequinRigRoot.FindRecursive(GameStateManager.Singleton.CosmeticItemCatalog.CosmeticItems[choice - 1].CharacterBone)
+				);
+			currentHat.SetItemColor(editedCharacterSheet.CharacterColor1);
+
+		}
+
+		SaveCharacterSheet();
+	}
+
 	public void SetColor0(Color col)
 	{
 		editedCharacterSheet.CharacterColor0 = col;
-		playerCharacterMesh.material.SetColor("_BaseColor", col);
+		mannequinCharacterMesh.material.SetColor("_BaseColor", col);
 
 		SaveCharacterSheet(); // this could be called with a delegate only when joining and to avoid duplication and writing to prefs a lot 
 	}
 	public void SetColor1(Color col)
 	{
 		editedCharacterSheet.CharacterColor1 = col;
-		playerCharacterMesh.material.SetColor("_BaseColor", col);
+		if (currentHat != null)
+			currentHat.SetItemColor(col);
 
 		SaveCharacterSheet(); // this could be called with a delegate only when joining and to avoid duplication and writing to prefs a lot 
 	}
@@ -87,13 +130,13 @@ public class PlayerCharacterCreator : MonoBehaviour
 		{
 			randomFallbackName = RandomName();
 			editedCharacterSheet.PlayerName = randomFallbackName;
-			playerNameTag.text = randomFallbackName;
+			mannequinNameTag.text = randomFallbackName;
 		}
 		else
 		{
 			editedCharacterSheet.PlayerName = name;
 			playerNameField.text = name;
-			playerNameTag.text = name;
+			mannequinNameTag.text = name;
 		}
 
 		SaveCharacterSheet(); // this could be called with a delegate only when joining and to avoid duplication and writing to prefs a lot 

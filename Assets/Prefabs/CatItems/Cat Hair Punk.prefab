@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1045cb5327ba2ea419841286603a5607, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorableMesh: {fileID: 0}
+  colorableMesh: {fileID: 4670970441862036487}
   ItemName: Punk Hair
   CharacterBone: Head
 --- !u!1 &5707516283675652257

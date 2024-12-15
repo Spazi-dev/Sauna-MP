@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections;
 
@@ -15,5 +16,26 @@ public static class ExtensionMethods
         trans.position = Vector3.zero;
         trans.localRotation = Quaternion.identity;
         trans.localScale = new Vector3(1, 1, 1);
+    }
+
+    public static Transform FindRecursive(this Transform self, string exactName) => self.FindRecursive(child => child.name == exactName);
+    public static Transform FindRecursive(this Transform self, Func<Transform, bool> selector)
+    {
+        foreach (Transform child in self)
+        {
+            if (selector(child))
+            {
+                return child;
+            }
+
+            var finding = child.FindRecursive(selector);
+
+            if (finding != null)
+            {
+                return finding;
+            }
+        }
+
+        return null;
     }
 }
