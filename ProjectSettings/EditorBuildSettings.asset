@@ -23,7 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SaunaScene.unity
     guid: 9a12077a139e9bf4e86561415db59cd3
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MenuUIScene.unity
     guid: e1828fa412c50c746aa0f88ef08a9f10
   m_configObjects:
