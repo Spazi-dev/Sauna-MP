@@ -159,7 +159,7 @@ public class PlayerManager : NetworkBehaviour
 			CharacterItem1 = GameStateManager.Singleton.localCharacterSheet.CharacterItem1
 		};
 
-		print($"<color=#88DD00>Owner has created new syncable data</color>");
+		//print($"<color=#88DD00>Owner has created new syncable data</color>");
 	}
 
 	void OnCharacterDataChanged(SyncableCharacterData previousValue, SyncableCharacterData newValue)
@@ -171,7 +171,7 @@ public class PlayerManager : NetworkBehaviour
 		if (newValue.CharacterItem1 > 0)
 			ChangeColor1(newValue.CharacterColor1); // only change hat color if there is a hat
 
-		print($"<color=#00DD88>Data has been changed</color>");
+		//print($"<color=#00DD88>Data has been changed</color>");
 	}
 	void ChangeUsername(string newUsername)
 	{

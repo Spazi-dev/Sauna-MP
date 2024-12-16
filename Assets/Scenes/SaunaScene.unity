@@ -5721,34 +5721,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3284362407487095608, guid: dffac517897ec954c8891f6236e895b9, type: 3}
   m_PrefabInstance: {fileID: 1808954507}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &105360418 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2130943084915617138, guid: 4214b57e615806c448ba9d993d629531, type: 3}
-  m_PrefabInstance: {fileID: 1711397144}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &105360419 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2130943084915617137, guid: 4214b57e615806c448ba9d993d629531, type: 3}
   m_PrefabInstance: {fileID: 1711397144}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &105360421
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 105360418}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e9f9f779a6e81e4ea4270c0d84a6a32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &105360422 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2130943084915617136, guid: 4214b57e615806c448ba9d993d629531, type: 3}
   m_PrefabInstance: {fileID: 1711397144}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 105360418}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31629c56f6f83234a90f6296f902f9c0, type: 3}
@@ -8151,6 +8134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeGlobalRules: {fileID: 11400000, guid: 9d2816643e4977e408d174d3e5506e60, type: 2}
   StartMenuParent: {fileID: 923781420}
+  CosmeticItemCatalog: {fileID: 11400000, guid: f81d74f253c2a5940b77fca4d05684d4, type: 2}
 --- !u!1 &367358820
 GameObject:
   m_ObjectHideFlags: 0
@@ -8891,6 +8875,11 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
+--- !u!4 &472616881 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3771277242739129112, guid: bde37fc9e6bc94943b584bd159bc8092, type: 3}
+  m_PrefabInstance: {fileID: 8426717325675193691}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &503787863
 GameObject:
   m_ObjectHideFlags: 0
@@ -10313,6 +10302,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2130943084915617136, guid: 4214b57e615806c448ba9d993d629531, type: 3}
+      propertyPath: startingColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2130943084915617136, guid: 4214b57e615806c448ba9d993d629531, type: 3}
+      propertyPath: startingColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2130943084915617136, guid: 4214b57e615806c448ba9d993d629531, type: 3}
+      propertyPath: startingColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2130943084915617136, guid: 4214b57e615806c448ba9d993d629531, type: 3}
       propertyPath: onColorChange.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -10695,10 +10696,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2130943084915617138, guid: 4214b57e615806c448ba9d993d629531, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 881190412}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4214b57e615806c448ba9d993d629531, type: 3}
 --- !u!114 &841629256 stripped
 MonoBehaviour:
@@ -10786,34 +10784,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 867805891}
   m_CullTransparentMesh: 1
---- !u!1 &881190407 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2130943084915617138, guid: 4214b57e615806c448ba9d993d629531, type: 3}
-  m_PrefabInstance: {fileID: 833316397}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &881190408 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2130943084915617137, guid: 4214b57e615806c448ba9d993d629531, type: 3}
   m_PrefabInstance: {fileID: 833316397}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &881190412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 881190407}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e9f9f779a6e81e4ea4270c0d84a6a32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &881190413 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2130943084915617136, guid: 4214b57e615806c448ba9d993d629531, type: 3}
   m_PrefabInstance: {fileID: 833316397}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 881190407}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31629c56f6f83234a90f6296f902f9c0, type: 3}
@@ -12226,15 +12207,21 @@ MonoBehaviour:
     - m_Text: No hat
       m_Image: {fileID: 0}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
-    - m_Text: Option B
-      m_Image: {fileID: 0}
-      m_Color: {r: 1, g: 1, b: 1, a: 1}
-    - m_Text: Option C
-      m_Image: {fileID: 0}
-      m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1205011735}
+        m_TargetAssemblyTypeName: PlayerCharacterCreator, Assembly-CSharp
+        m_MethodName: SelectHat
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!114 &1105023345
 MonoBehaviour:
@@ -12925,8 +12912,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colorPicker0: {fileID: 881190413}
   colorPicker1: {fileID: 105360422}
-  playerCharacterMesh: {fileID: 1827037941}
-  playerNameTag: {fileID: 841629256}
+  cosmeticItemDropdown: {fileID: 1105023344}
+  mannequinRigRoot: {fileID: 472616881}
+  mannequinCharacterMesh: {fileID: 1827037941}
+  mannequinNameTag: {fileID: 841629256}
   playerNameField: {fileID: 1429777521}
   defaultNames:
   - HurjaSaunoja
@@ -15528,7 +15517,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2130943084915617136, guid: 4214b57e615806c448ba9d993d629531, type: 3}
       propertyPath: onColorChange.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2130943084915617136, guid: 4214b57e615806c448ba9d993d629531, type: 3}
       propertyPath: onColorChange.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -15540,11 +15529,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2130943084915617136, guid: 4214b57e615806c448ba9d993d629531, type: 3}
       propertyPath: onColorChange.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetColor
+      value: SetColor1
       objectReference: {fileID: 0}
     - target: {fileID: 2130943084915617136, guid: 4214b57e615806c448ba9d993d629531, type: 3}
       propertyPath: onColorChange.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PlayerCharacterSheet, Assembly-CSharp
+      value: PlayerCharacterCreator, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2130943084915617136, guid: 4214b57e615806c448ba9d993d629531, type: 3}
       propertyPath: onColorChange.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -15909,10 +15898,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2130943084915617138, guid: 4214b57e615806c448ba9d993d629531, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 105360421}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4214b57e615806c448ba9d993d629531, type: 3}
 --- !u!1 &1739017646
 GameObject:

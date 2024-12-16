@@ -516,7 +516,7 @@ Material:
     - _ShadeColor_Step: 0.4
     - _Shininess: 0
     - _SizeFalloff: 0
-    - _Smoothness: 0.696
+    - _Smoothness: 0.672
     - _SmoothnessRemapMax: 1
     - _SmoothnessRemapMin: 0
     - _SmoothnessSource: 0

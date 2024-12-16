@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ public class GameStateManager : MonoBehaviour
 	[SerializeField] GameObject StartMenuParent;
 	public CosmeticItemCatalog CosmeticItemCatalog;
 	public CharacterSheet localCharacterSheet;
+	PlayerCharacterCreator playerCharacterCreator;
 	void Awake()
 	{
 		if (Singleton == null)
@@ -17,22 +19,28 @@ public class GameStateManager : MonoBehaviour
 			Singleton = this;
 			DontDestroyOnLoad(gameObject);
 		}
+
 	}
 	void Start()
 	{
+		playerCharacterCreator = StartMenuParent.GetComponentInChildren<PlayerCharacterCreator>();
+
 		NetworkManager.Singleton.OnClientStarted += StartEvent;
 		NetworkManager.Singleton.OnClientStopped += QuitEvent;
+
 	}
 
 	void StartEvent()
 	{
-		print($"<color=#DD0088>Client starteddd </color>");
+		//print($"<color=#DD0088>Client starteddd </color>");
+		playerCharacterCreator.SaveCharacterSheetData();
 		StartMenuParent.SetActive(false);
 	}
 	void QuitEvent(bool host)
 	{
-		print($"<color=#FF00AA>Client quitted, hostmode: {host}</color>");
+		//print($"<color=#FF00AA>Client quitted, hostmode: {host}</color>");
 		StartMenuParent.SetActive(true);
+		playerCharacterCreator.Invoke("RemakeCharacter", 0);
 	}
 
 

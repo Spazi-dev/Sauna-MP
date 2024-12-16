@@ -84,7 +84,7 @@ namespace Unity.Netcode.Samples.MultiplayerUseCases.Proximity
 
         void OnClientLocalPlayerProximityStatusChanged(bool isClose)
         {
-            Debug.Log($"Local player is now {(isClose ? "close" : "far")}");
+            //Debug.Log($"Local player is now {(isClose ? "close" : "far")}");
         }
     }
 }
