@@ -98,7 +98,7 @@ public class PlayerCharacterCreator : MonoBehaviour
 
 		colorPicker0.color = editedCharacterSheet.CharacterColor0;
 		colorPicker1.color = editedCharacterSheet.CharacterColor1;
-		cosmeticItemDropdown.SetValueWithoutNotify(editedCharacterSheet.CharacterItem1); print($"<color=#DDGG88>hat dropdown set with choice {editedCharacterSheet.CharacterItem1}</color>");
+		cosmeticItemDropdown.SetValueWithoutNotify(editedCharacterSheet.CharacterItem1); //print($"<color=#DDGG88>hat dropdown set with choice {editedCharacterSheet.CharacterItem1}</color>");
 
 		SetColor0(editedCharacterSheet.CharacterColor0);
 		SelectHat(editedCharacterSheet.CharacterItem1); //print($"<color=#DDGG88>hat remade with choice {editedCharacterSheet.CharacterItem1}</color>");
